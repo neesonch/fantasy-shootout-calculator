@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import OpponentListItem from './OpponentListItem'
 
 export default class TeamListItem extends Component {
 
@@ -8,7 +9,7 @@ export default class TeamListItem extends Component {
 	}
 
 	componentDidUpdate(prevProps){
-		if(prevProps.defenseRankings != this.props.defenseRankings){
+		if(prevProps.defenseRankings !== this.props.defenseRankings){
 			const teamDefensiveRank = this.props.defenseRankings.findIndex(rank => {
 				return(rank.team === this.props.team.name && rank.index > -1)
 			});
@@ -21,7 +22,7 @@ export default class TeamListItem extends Component {
 			<div style = {styles.title}>
 				{this.props.team.name} (Defensive rank: {this.state.teamDefensiveRank > 0 ? this.state.teamDefensiveRank + 1 : 'n/a' });
 				<div style = {styles.container}>
-					{this.props.team.schedule.map((opponent, index) => <div style = {styles.item} key={index}>{opponent}</div>)}
+					{this.props.team.schedule.map((opponent, index) => <OpponentListItem key={index} opponent={opponent} offenseRankings = {this.props.offenseRankings} defenseRank = {this.state.teamDefensiveRank}/>)}
 				</div>
 			</div>
 		);
@@ -37,12 +38,6 @@ const styles = {
 		margin: '2px',
 		padding: '2px',
 	},
-	item: {
-		margin: '2px',
-		padding: '2px',
-		borderLeft: '1px solid black',
-		flexBasis: '0',
-		flexGrow: '1',
-	}
+
 }
 
